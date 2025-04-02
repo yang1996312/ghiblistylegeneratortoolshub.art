@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A collection of Ghibli Style Image Generator tools and resources">
+    <meta name="keywords" content="Ghibli Style Image Generator, Studio Ghibli, AI Art, Image Generation">
+    <title>Ghibli Style Image Generator Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/ghibli-style.css">
+    <style>
+        :root {
+            --primary-color: #4a7c59; /* Forest green */
+            --secondary-color: #8fc0a9; /* Soft mint */
+            --accent-color: #f8d16c; /* Warm yellow */
+            --text-color: #3d405b; /* Dark blue-gray */
+            --light-color: #f8f9fa; /* Off-white */
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30,10 Q50,0 70,10 T90,30 Q100,50 90,70 T70,90 Q50,100 30,90 T10,70 Q0,50 10,30 T30,10 Z" fill="%238fc0a9" fill-opacity="0.1"/></svg>');
+            background-size: 300px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.2;
+        }
+        
+        .header-images img {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-images img:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            transform: rotate(-5deg);
+        }
+        
+        .header-images img:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            transform: rotate(10deg);
+        }
+        
+        .header-images img:nth-child(3) {
+            bottom: 15%;
+            left: 20%;
+            transform: rotate(7deg);
+        }
+        
+        .header-images img:nth-child(4) {
+            bottom: 25%;
+            right: 10%;
+            transform: rotate(-8deg);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20,20 C40,0 60,0 80,20 C100,40 100,60 80,80 C60,100 40,100 20,80 C0,60 0,40 20,20 Z" fill="%23f8d16c" fill-opacity="0.3"/></svg>');
+            background-size: contain;
+            z-index: 0;
+        }
+        
+        .intro p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color);
+        }
+        
+        .tool-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .tool-content {
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+        
+        .tool-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        
+        .tool-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .tool-link:hover {
+            background-color: #3a6347;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="10" viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 C30,0 70,0 100,10" stroke="%23f8d16c" stroke-width="2" fill="none"/></svg>');
+            background-size: 100px 10px;
+            background-repeat: repeat-x;
+        }
+        
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header-images img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-images">
+            <img src="img/ghibli1.jpg.jpg" alt="Ghibli inspired image">
+            <img src="img/ghibli2.jpg.jpg" alt="Ghibli inspired image">
+            <img src="img/ghibli3.jpg.jpg" alt="Ghibli inspired image">
+            <img src="img/ghibli4.jpg.jpg" alt="Ghibli inspired image">
+        </div>
+        <div class="header-content">
+            <div class="title-image-combo">
+                <div class="tool-image-frame">
+                    <img src="img/ghibli1.jpg.jpg" alt="Ghibli inspired image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="ghibli-title">Ghibli Style Image Generator</h1>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <p>Welcome to the Ghibli Style Image Generator Tools Hub! Here we've gathered a collection of high-quality AI tools to help you create beautiful images inspired by Hayao Miyazaki's distinctive animation style. Whether you're an animation enthusiast, artist, or designer, you'll find the perfect tools to effortlessly generate dreamy, warm, and imaginative Ghibli-style illustrations.</p>
+        </section>
+        
+        <section class="tools-grid">
+            <!-- Tool 1 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool1.jpg" alt="Ghibli Image Generator" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli Image Generator</h3>
+                    <a href="https://ghibligenerator.app/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 2 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool2.jpg" alt="Ghibli Generator" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli Generator</h3>
+                    <a href="https://ghibligenerator.net/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 3 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool3.jpg" alt="StudioGhibli.ai" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">StudioGhibli.ai</h3>
+                    <a href="https://www.studioghibli.ai/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 4 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool4.jpg" alt="GhibliChatGPT" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">GhibliChatGPT</h3>
+                    <a href="https://ghiblichatgpt.net/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 5 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool5.jpg" alt="Ghibli ChatGPT" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli ChatGPT</h3>
+                    <a href="https://ghiblichatgpt.org/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 6 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool6.jpg" alt="Ghibli AI" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli AI</h3>
+                    <a href="https://www.aighibli.org/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 7 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool7.jpg" alt="Ghibli Image Generator" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli Image Generator</h3>
+                    <a href="https://ghibliimagegenerator.com/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 8 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool8.jpg" alt="Ghibli Image Generator" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli Image Generator</h3>
+                    <a href="https://ghibliimagegenerator.net/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 9 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool9.jpg" alt="Ghibli Image Generator" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli Image Generator</h3>
+                    <a href="https://ghibliimagegenerator.app/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 10 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool10.jpg" alt="Ghibli AI" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli AI</h3>
+                    <a href="https://www.ghibliai.org/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 11 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool11.jpg" alt="Ghibli Image Generator" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli Image Generator</h3>
+                    <a href="https://www.ghibliimagegenerator.io/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+            
+            <!-- Tool 12 -->
+            <div class="tool-card">
+                <div class="tool-image-frame">
+                    <img src="tool/tool12.jpg" alt="Ghibli AI" class="tool-image">
+                    <div class="arrow-pointer">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7,2L17,12L7,22L4.8,19.8L12.6,12L4.8,4.2L7,2Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title ghibli-font">Ghibli AI</h3>
+                    <a href="https://www.ghibliai.net/" class="tool-link" target="_blank">Visit Tool</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Ghibli Style Image Generator Tools | Curated Resources for Ghibli Art Enthusiasts</p>
+    </footer>
+</body>
+</html>

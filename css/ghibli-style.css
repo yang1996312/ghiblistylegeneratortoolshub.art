@@ -1,0 +1,95 @@
+/* 吉卜力风格字体和图片框架样式 */
+@font-face {
+    font-family: 'GhibliFont';
+    src: url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+    /* 使用Caveat字体模拟吉卜力风格的手写感 */
+}
+
+/* 标题吉卜力风格 */
+h1.ghibli-title {
+    font-family: 'GhibliFont', 'Caveat', cursive;
+    font-size: 3.5rem;
+    color: #2a5c39; /* 更深的绿色，增加对比度 */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.8);
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+/* 工具卡片标题吉卜力风格 */
+.tool-title.ghibli-font {
+    font-family: 'GhibliFont', 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: #4a7c59;
+    letter-spacing: 0.5px;
+}
+
+/* 图片框架样式 */
+.tool-image-frame {
+    position: relative;
+    border: 4px solid #4a7c59;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    aspect-ratio: 1/1; /* 确保图片是正方形 */
+}
+
+.tool-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 箭头指向图片 */
+.arrow-pointer {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.arrow-pointer svg {
+    width: 100%;
+    height: 100%;
+    fill: #f8d16c;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* 标题和图片组合设计 */
+.title-image-combo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.title-image-combo .tool-image-frame {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    h1.ghibli-title {
+        font-size: 2.5rem;
+        padding: 8px 12px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+    
+    .title-image-combo .tool-image-frame {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .tool-title.ghibli-font {
+        font-size: 1.3rem;
+    }
+}
